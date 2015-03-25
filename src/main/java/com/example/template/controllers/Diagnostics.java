@@ -18,9 +18,10 @@ public class Diagnostics
 {
     @Autowired
     private DependenciesProvider dependenciesProvider;
-    
+
     @RequestMapping(value = "/dependencies", method = RequestMethod.GET)
-    public ResponseEntity<List<String>> diagnoseDependencies() {
+    public ResponseEntity<List<String>> diagnoseDependencies()
+    {
         return new ResponseEntity<List<String>>(dependenciesProvider.getDependenciesList(), HttpStatus.OK);
     }
 }
