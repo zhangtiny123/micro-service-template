@@ -12,13 +12,12 @@ import static org.junit.Assert.assertThat;
 @Component
 public class DependenciesProviderTest
 {
-    private DependenciesProvider dependenciesProvider;
     private List<String> dependencies;
 
     @Before
     public void setUp() throws Exception
     {
-        dependenciesProvider = new DependenciesProvider();
+        DependenciesProvider dependenciesProvider = new DependenciesProvider();
         dependencies = dependenciesProvider.getDependenciesList();
     }
 
@@ -29,7 +28,7 @@ public class DependenciesProviderTest
     }
 
     @Test
-    public void should_()
+    public void should_return_list_with_AddressService()
     {
         assertThat(dependencies.contains("AddressService"), is(true));
     }
