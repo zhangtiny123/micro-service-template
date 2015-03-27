@@ -10,4 +10,17 @@
 
     <context:annotation-config/>
     <context:component-scan base-package="com.example.template"/>
+
+
+    <bean id="fileHandler" class="java.util.logging.FileHandler">
+        <constructor-arg value="./src/main/resources/logs/my-log.log"/>
+        <property name="formatter" ref="simpleFormatter"/>
+    </bean>
+
+    <bean id="simpleFormatter" class="java.util.logging.SimpleFormatter"/>
+
+    <bean name="bookLogger" class="java.util.logging.Logger">
+        <constructor-arg value="bookLogger"/>
+    </bean>
+    
 </beans>

@@ -14,17 +14,17 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 
 @RunWith(SpringJUnit4ClassRunner.class)
 @ContextConfiguration(locations = {"classpath:ApplicationContext.xml"})
-public class HealthCheckTest
+public class HealthCheckControllerTest
 {
     @Autowired
-    private HealthCheck healthCheck;
+    private HealthCheckController healthCheckController;
 
     private MockMvc mockMvc;
 
     @Before
     public void setUp() throws Exception
     {
-        mockMvc = MockMvcBuilders.standaloneSetup(healthCheck).build();
+        mockMvc = MockMvcBuilders.standaloneSetup(healthCheckController).build();
     }
 
     @Test

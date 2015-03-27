@@ -21,9 +21,25 @@ repositories {
 
 dependencies {
 	compile("org.springframework.boot:spring-boot-starter-web")
+	compile("org.springframework.boot:spring-boot-starter-jetty")
 	compile("org.springframework.boot:spring-boot-starter-actuator")
 	compile("org.springframework.hateoas:spring-hateoas")
 	testCompile("org.springframework.boot:spring-boot-starter-test")
+}
+
+task fatJar(type: Jar) {
+	manifest {
+		attributes(
+			"Main-Class": "com.example.template.Application",
+			"Application-Name": "BookService-v0.1.0",
+			"Trusted-Only": true,
+			"Trusted-Library": true,
+			"Class-Path": configurations.compile.collect { it.getName() }.join(' '))
+	}
+	baseName = 'bookService' + '-v0.1.0'
+	from { configurations.compile.collect { it.isDirectory() ? it : zipTree(it) } }
+	with jar
+	exclude 'META-INF/*.RSA', 'META-INF/*.SF','META-INF/*.DSA'
 }
 
 task createJavaProject << {
