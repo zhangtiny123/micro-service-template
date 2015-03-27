@@ -6,6 +6,10 @@
         <fileset id="fileset" name="Spring Application Context" removed="false">
           <file>file://$MODULE_DIR$/src/main/resources/applicationContext.xml</file>
           <file>file://$MODULE_DIR$/src/main/webapp/WEB-INF/spring-servlet.xml</file>
+          <file>file://$MODULE_DIR$/src/main/java/com/example/template/ApplicationConfiguration.java</file>
+          <file>file://$MODULE_DIR$/src/main/java/com/example/template/ApplicationConfiguration.java</file>
+          <file>file://$MODULE_DIR$/src/main/java/com/example/template/Application.java</file>
+          <file>file://$MODULE_DIR$/src/main/java/com/example/template/Application.java</file>
         </fileset>
       </configuration>
     </facet>

@@ -1,31 +1,56 @@
 package com.example.template;
 
-import org.apache.catalina.connector.Connector;
-import org.springframework.beans.factory.annotation.Value;
-import org.springframework.boot.context.embedded.ConfigurableEmbeddedServletContainer;
-import org.springframework.boot.context.embedded.EmbeddedServletContainerCustomizer;
-import org.springframework.boot.context.embedded.tomcat.TomcatEmbeddedServletContainerFactory;
+import com.example.template.controllers.BookController;
+import com.example.template.services.BookService;
+import com.example.template.services.DependenciesProvider;
+import org.springframework.boot.context.embedded.EmbeddedServletContainerFactory;
+import org.springframework.boot.context.embedded.jetty.JettyEmbeddedServletContainerFactory;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+
+import java.io.IOException;
+import java.util.logging.FileHandler;
+import java.util.logging.Logger;
+import java.util.logging.SimpleFormatter;
 
 @Configuration
 public class ApplicationConfiguration
 {
     @Bean
-    EmbeddedServletContainerCustomizer containerCustomizer(
-            @Value("${server.port}") final int serverPort) throws Exception
+    EmbeddedServletContainerFactory containerFactory()
     {
-        return new EmbeddedServletContainerCustomizer()
-        {
-            @Override
-            public void customize(ConfigurableEmbeddedServletContainer container)
-            {
-                TomcatEmbeddedServletContainerFactory tomcat = (TomcatEmbeddedServletContainerFactory) container;
-                Connector connector = new Connector();
-                connector.setPort(serverPort);
-                connector.setSecure(true);
-                tomcat.addAdditionalTomcatConnectors(connector);
-            }
-        };
+        return new JettyEmbeddedServletContainerFactory(8081);
+    }
+
+    @Bean
+    Logger logger()
+    {
+        return Logger.getLogger("book-logger");
+    }
+
+    @Bean
+    FileHandler fileHandler() throws IOException
+    {
+        FileHandler fileHandler = new FileHandler("./src/main/resources/logs/my-log.log");
+        fileHandler.setFormatter(new SimpleFormatter());
+        return fileHandler;
+    }
+
+    @Bean
+    BookService bookService(Logger logger, FileHandler fileHandler)
+    {
+        return new BookService(logger, fileHandler);
+    }
+
+    @Bean
+    DependenciesProvider dependenciesProvider()
+    {
+        return new DependenciesProvider();
+    }
+
+    @Bean
+    BookController bookController()
+    {
+        return new BookController();
     }
 }
